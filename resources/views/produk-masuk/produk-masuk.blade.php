@@ -41,11 +41,12 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach($stok as $value)
                         <tr>
                             <td>1</td>
-                            <td>13/01/2017</td>
-                            <td>Kopi Luwak 500 g</td>
-                            <td>5</td>
+                            <td>{{$value->created_at}}</td>
+                            <td>{{$value->produk->nama_produk}}</td>
+                            <td>{{$value->jumlah_stok}}</td>
                             <td>
                                 <button type="button" class="btn btn-xs btn-warning">Ubah</button>
                             </td>
