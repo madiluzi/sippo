@@ -30,32 +30,49 @@
         <div class="sidebar-scroll">
             <nav>
                 <ul class="nav">
-                    <li><a href="/" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
-                    <li>
-                        <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-pie-chart"></i>
-                            <span>Transaksi</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-                        <div id="subPages" class="collapse ">
-                            <ul class="nav">
-                                <li><a href="/barang-masuk" class="">Barang Masuk</a></li>
-                                <li><a href="/barang-keluar" class="">Barang Keluar</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#subPages2" data-toggle="collapse" class="collapsed"><i class="lnr lnr-database"></i>
-                            <span>Data Master</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-                        <div id="subPages2" class="collapse ">
-                            <ul class="nav">
-                                <li><a href="/data-produk" class="">Data Produk</a></li>
-                                <li><a href="/data-kategori-produk" class="">Data Kategori Produk</a></li>
-                                <li><a href="/data-pengguna" class="">Data Pengguna</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li><a href="/laporan" class=""><i class="lnr lnr-chart-bars"></i>
-                            <span>Laporan Penjualan</span></a></li>
-                    <li><a href="/peramalan" class=""><i class="lnr lnr-list"></i>
-                            <span>Peramalan</span></a></li>
+                    @if(Auth::user()->admin==0)
+                        <li><a href="/" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                        <li>
+                            <a href="#subPages3" data-toggle="collapse" class="collapsed"><i
+                                        class="lnr lnr-database"></i>
+                                <span>Transaksi</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subPages3" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="/transaksi-masuk" class="">Transaksi Masuk</a></li>
+                                    <li><a href="/transaksi-keluar" class="">Transaksi Keluar</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    @else(Auth::user()->admin==1)
+                        <li><a href="/" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                        <li>
+                            <a href="#subPages2" data-toggle="collapse" class="collapsed"><i
+                                        class="lnr lnr-database"></i>
+                                <span>Data Master</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subPages2" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="/data-produk" class="">Data Produk</a></li>
+                                    <li><a href="/data-kategori-produk" class="">Data Kategori Produk</a></li>
+                                    <li><a href="/data-pengguna" class="">Data Pengguna</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subPages3" data-toggle="collapse" class="collapsed"><i
+                                        class="lnr lnr-database"></i>
+                                <span>Transaksi</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subPages3" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="/transaksi-masuk" class="">Transaksi Masuk</a></li>
+                                    <li><a href="/transaksi-keluar" class="">Transaksi Keluar</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="/laporan-penjualan" class=""><i class="lnr lnr-chart-bars"></i>
+                                <span>Laporan Penjualan</span></a></li>
+                        <li><a href="/peramalan" class=""><i class="lnr lnr-pie-chart"></i>
+                                <span>Peramalan</span></a></li>
+                    @endif
                 </ul>
             </nav>
         </div>
@@ -106,26 +123,13 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                        class="lnr lnr-question-circle"></i> <span>Help</span> <i
-                                        class="icon-submenu lnr lnr-chevron-down"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Basic Use</a></li>
-                                <li><a href="#">Working With Data</a></li>
-                                <li><a href="#">Security</a></li>
-                                <li><a href="#">Troubleshooting</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/assets/img/user.png"
                                                                                             class="img-circle"
                                                                                             alt="Avatar">
-                                <span>Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                                <span>{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}</span>
+                                <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
-                                <li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
-                                <li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
-                                <li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+                                <li><a href="/logout"><i class="lnr lnr-exit"></i> <span>Keluar</span></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -151,6 +155,7 @@
 <script src="/assets/js/plugins/toastr/toastr.min.js"></script>
 <script src="/assets/js/plugins/chartist/chartist.min.js"></script>
 <script src="/assets/js/klorofil.min.js"></script>
+
 </body>
 
 </html>

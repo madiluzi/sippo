@@ -4,56 +4,96 @@ namespace App\Http\Controllers;
 
 use App\Kategori;
 use App\Produk;
+use App\Stok;
+use Illuminate\Support\Facades\Input;
+use Session;
 use Illuminate\Http\Request;
 
 class ProdukController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        $produk = Produk::paginate(10);
-        return view('produk.produk', compact('produk'));
+        $stok = Stok::raw('id_produk, sum(jumlah_stok) as stok')
+            ->groupBy('id_produk')
+            ->orderBy('id_produk')
+            ->get();
+
+        $produk = Produk::paginate(15);
+        return view('produk.produk', compact('produk', 'stok'));
     }
 
     public function create()
     {
         $kategori = Kategori::all();
         return view('produk.form-produk', compact('kategori'));
-        /*return view('form-produk',[
-            'kategori' => $kategori
-        ]);*/
     }
 
     public function store(Request $request)
     {
-        $produk = new Produk();
-        $produk->nama_produk = $request->input('nama-produk');
-        $produk->id_kategori = $request->input('kategori');
-        $produk->harga_satuan = $request->input('harga-satuan');
-        $produk->stok_unit = $request->input('stok-unit');
-        $produk->berat = $request->input('berat');
-        $produk->gambar = $request->input('gambar');
-        $produk->keterangan = $request->input('keterangan');
-        $produk->save();
-        return redirect('data-produk');
+//        $file = array('gambar' => Input::file('gambar'));
+//        // setting up rules
+//        if (Input::file('gambar')->isValid()) {
+//            $destinationPath = 'images'; // upload path
+//            $extension = Input::file('gambar')->getClientOriginalExtension(); // getting image extension
+//            $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
+//            Input::file('gambar')->move($destinationPath, $fileName); // uploading file to given path
+        $path = $request->file('foto')->store('konfirmasi','foto');
+            $produk = new Produk();
+            $produk->nama_produk = $request->input('nama-produk');
+            $produk->id_kategori = $request->input('kategori');
+            $produk->harga_satuan = $request->input('harga-satuan');
+            $produk->berat = $request->input('berat');
+            $produk->keterangan = $request->input('keterangan');
+            $produk->gambar = $path;
+            $produk->save();
+            // sending back with message
+
+            return redirect('/data-produk');
+//        } else {
+//            // sending back with error message.
+//            Session::flash('error', 'uploaded file is not valid');
+//            return redirect('/data-produk/tambah');
+//        }
     }
 
     public function update($id)
     {
         $produk = Produk::find($id);
         $kategori = Kategori::all();
-        return view('produk.form-edit-produk',compact('kategori'), [
-            'detail' => $produk
-        ]);
+        return view('produk.form-edit-produk', compact('produk', 'kategori'));
     }
 
     public function edit(Request $request, $id)
     {
         $produk = Produk::find($id);
-        $produk->nama_produk = $request->input('nama-produk');
-        $produk->id_kategori = $request->input('kategori');
-        $produk->harga_satuan = $request->input('harga-satuan');
-        $produk->update();
-        return redirect('data-produk');
+        $file = array('gambar' => Input::file('gambar'));
+        // setting up rules
+        if (Input::file('gambar')->isValid()) {
+            $destinationPath = 'images'; // upload path
+            $extension = Input::file('gambar')->getClientOriginalExtension(); // getting image extension
+            $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
+            Input::file('gambar')->move($destinationPath, $fileName); // uploading file to given path
+            $produk->nama_produk = $request->input('nama-produk');
+            $produk->id_kategori = $request->input('kategori');
+            $produk->harga_satuan = $request->input('harga-satuan');
+            $produk->berat = $request->input('berat');
+            $produk->keterangan = $request->input('keterangan');
+            $produk->gambar = $fileName;
+            $produk->update();
+            // sending back with message
+
+            return redirect('/data-produk');
+        } else {
+            // sending back with error message.
+            Session::flash('error', 'uploaded file is not valid');
+            return redirect('/data-produk/tambah');
+        }
+
     }
 
     public function delete($id)

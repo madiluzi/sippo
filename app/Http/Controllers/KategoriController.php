@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class KategoriController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $kategori = Kategori::paginate(10);
@@ -23,41 +28,38 @@ class KategoriController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'nama-kategori' => 'required|max:50',
+        ]);
+
         $kategori = new Kategori();
-        $kategori->nama_produk = $request->input('nama-produk');
-        $kategori->id_kategori = $request->input('kategori');
-        $kategori->harga_satuan = $request->input('harga-satuan');
-        $kategori->stok_unit = $request->input('stok-unit');
-        $kategori->berat = $request->input('berat');
-        $kategori->gambar = $request->input('gambar');
-        $kategori->keterangan = $request->input('keterangan');
+        $kategori->nama_kategori = $request->input('nama-kategori');
         $kategori->save();
-        return redirect('data-produk');
+        return redirect('data-kategori-produk');
     }
 
     public function update($id)
     {
-        $kategori = Produk::find($id);
-        $kategori = Kategori::all();
-        return view('produk.form-edit-produk',compact('kategori'), [
-            'detail' => $kategori
-        ]);
+        $kategori = Kategori::find($id);
+        return view('kategori-produk.form-edit-kategori-produk', compact('kategori'));
     }
 
     public function edit(Request $request, $id)
     {
-        $kategori = Produk::find($id);
-        $kategori->nama_produk = $request->input('nama-produk');
-        $kategori->id_kategori = $request->input('kategori');
-        $kategori->harga_satuan = $request->input('harga-satuan');
+        $this->validate($request, [
+            'nama-kategori' => 'required|max:50',
+        ]);
+
+        $kategori = Kategori::find($id);
+        $kategori->nama_kategori = $request->input('nama-kategori');
         $kategori->update();
-        return redirect('data-produk');
+        return redirect('data-kategori-produk');
     }
 
     public function delete($id)
     {
-        $kategori = Produk::find($id);
+        $kategori = Kategori::find($id);
         $kategori->delete();
-        return redirect('data-produk');
+        return redirect('data-kategori-produk');
     }
 }

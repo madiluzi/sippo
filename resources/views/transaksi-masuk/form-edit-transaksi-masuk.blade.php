@@ -3,78 +3,56 @@
 @section('content')
     <div class="main-content">
         <div class="container-fluid">
-            <a href="/data-produk" class="btn btn-danger pull-right"><i class="fa fa-close"></i></a>
+            <a href="/transaksi-masuk" class="btn btn-danger pull-right"><i class="fa fa-close"></i></a>
             <h3 class="page-title">Data Produk</h3>
             <div class="panel">
-                <form class="form-horizontal" data-validate="parsley" method="post" enctype="multipart/form-data"
-                      action="/data-produk/tambah">
+                <form class="form-horizontal" data-validate="parsley" method="post"
+                      action="/transaksi-masuk/edit/{{$stok->id_stok}}">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Tambah Data Produk</h3>
+                        <h3 class="panel-title">Edit Data Transaksi Masuk</h3>
                     </div>
                     <div class="panel-body">
                         {!! csrf_field() !!}
                         <div class="row">
                             <div class="col-md-4">
+                                <label class="pull-right">Nama Kategori Produk</label>
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-control" name="kategori" id="kategori">
+                                    <option value="" selected="selected">Pilih Kategori Produk</option>
+                                    @foreach($kategori as $ktg)
+                                        <option value="{{$ktg->id_kategori}}"
+                                                @if($ktg->id_kategori==$stok->produk->kategori->id_kategori) selected="selected"
+                                                @endif
+                                        >{{$ktg->nama_kategori}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
                                 <label class="pull-right">Nama Produk</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="nama-produk">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="pull-right">Kategori Produk</label>
-                            </div>
-                            <div class="col-md-6">
-                                <select class="form-control" name="kategori">
-                                    <option value="" selected="selected">Pilih Kategori Produk</option>
-                                    @foreach($kategori as $jns)
-                                        <option value="{{$jns->id_kategori}}">{{$jns->nama_kategori}}</option>
+                                <select class="form-control" name="produk" id="produk">
+                                    <option value="" selected="selected">Pilih Produk</option>
+                                    @foreach($produk as $pdk)
+                                        <option value="{{$pdk->id_produk}}"
+                                                @if($pdk->id_produk==$stok->id_produk) selected="selected"
+                                                @endif
+                                        >{{$pdk->nama_produk}}</option>
                                     @endforeach
                                 </select>
-                                {{--@foreach($kategori as $jns)--}}
-                                {{--<label class="fancy-radio">--}}
-                                {{--<input name="id_kategori" value="{{$jns->id_kategori}}" type="radio">--}}
-                                {{--<span><i></i> {{$jns->nama_kategori}} </span>--}}
-                                {{--</label>--}}
-                                {{--@endforeach--}}
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-md-4">
-                                <label class="pull-right">Harga Satuan</label>
+                                <label class="pull-right">Jumlah</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="number" class="form-control" name="harga-satuan">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="pull-right">Berat</label>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="number" class="form-control" name="berat">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="pull-right">Gambar</label>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="file" name="gambar">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="pull-right">Keterangan</label>
-                            </div>
-                            <div class="col-md-6">
-                                <textarea class="form-control" name="keterangan" rows="4"></textarea>
+                                <input type="number" class="form-control" name="jumlah" value="{{$stok->jumlah_stok}}">
                             </div>
                         </div>
                     </div>
@@ -99,9 +77,22 @@
                             </div>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $('#kategori').on('change', function (e) {
+            var id_kategori = e.target.value;
+            $.get('{{ url('information') }}/create/ajax-produk?id_kategori=' + id_kategori, function (data) {
+                $('#produk').empty();
+                $.each(data, function (index, subCatObj) {
+                    $('#produk').append("<option value='" + subCatObj.id_produk + "'> " + subCatObj.nama_produk + "");  //nambah optionnya
+                });
+            });
+        });
+    </script>
 @endsection

@@ -7,7 +7,7 @@
             <h3 class="page-title">Data Kategori Produk</h3>
             <div class="panel">
                 <form class="form-horizontal" data-validate="parsley" method="post"
-                      action="/data-kategori-produk/proses-tambah">
+                      action="/data-kategori-produk/tambah">
                     <div class="panel-heading">
                         <h3 class="panel-title">Tambah Data Kategori Produk</h3>
                     </div>
@@ -18,7 +18,14 @@
                                 <label class="pull-right">Nama Kategori Produk</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" placeholder="nama kategori" name="nama-kategori">
+                                <input id="nama-kategori" type="text" class="form-control" name="nama-kategori"
+                                       value="{{ old('nama-kategori') }}" required>
+
+                                @if ($errors->has('nama-kategori'))
+                                    <span class="help-block">
+                                        <p>{{ $errors->first('nama-kategori') }}</p>
+                                    </span>
+                                @endif
                             </div>
                         </div>
                     </div>

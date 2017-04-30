@@ -1,5 +1,5 @@
 @extends('master')
-@section('title', 'Data Jenis Barang|Sistem Persediaan Produk')
+@section('title', 'Data Ketegori Produk|Sistem Persediaan Produk')
 @section('content')
     <div class="main-content">
         <div class="container-fluid">
@@ -34,15 +34,14 @@
                         <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Nama Jenis Barang</th>
+                            <th>Nama Kategori Produk</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        @php($i = 1)
                         @foreach($kategori as $value)
                             <tr>
-                                <td>{{$i++}}</td>
+                                <td>{{ (($kategori->currentPage() - 1 ) * $kategori->perPage() ) + $loop->iteration }}</td>
                                 <td>{{$value->nama_kategori}}</td>
                                 <td>
                                     <a href="/data-kategori-produk/edit/{{$value->id_kategori}}"><span class="label label-warning">EDIT</span></a>

@@ -1,8 +1,9 @@
 @extends('master')
+@section('title', 'Data Pengguna|Sistem Persediaan Produk')
 @section('content')
     <div class="main-content">
         <div class="container-fluid">
-            <h3 class="page-title">Transaksi Barang Keluar</h3>
+            <h3 class="page-title">Data Pengguna</h3>
             <div class="row">
                 <div class="col-md-3">
                     <form class="navbar-form navbar-left hidden-xs">
@@ -40,15 +41,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>13/01/2017</td>
-                            <td>Kopi Luwak 500 g</td>
-                            <td>5</td>
-                            <td>
-                                <button type="button" class="btn btn-xs btn-warning">Ubah</button>
-                            </td>
-                        </tr>
+                        @foreach($pengguna as $value)
+                            <tr>
+                                <td>1</td>
+                                <td>{{$value->name}}</td>
+                                <td>{{$value->username}}</td>
+                                <td>{{$value->email}}</td>
+                                <td>5</td>
+                                <td>
+                                    <button type="button" class="btn btn-xs btn-warning">Ubah</button>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>

@@ -1,9 +1,9 @@
 @extends('master')
-@section('title', 'Data Produk|Sistem Persediaan Produk')
+@section('title', 'Data Transaksi Barang Keluar|Sistem Persediaan Produk')
 @section('content')
     <div class="main-content">
         <div class="container-fluid">
-            <h3 class="page-title">Data Produk</h3>
+            <h3 class="page-title">Data Transaksi Barang Keluar</h3>
             <div class="row">
                 <div class="col-md-3">
                     <form class="navbar-form navbar-left hidden-xs">
@@ -15,49 +15,49 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-2 col-md-offset-2">
-                    <span>Tampilkan</span>
-                    <select class="form-control input-sm" name="tampilData">
+                <div class="col-md-1 col-md-offset-2">
+                    <label>Tampilkan</label>
+                    <select class="form-control input-sm">
                         <option value="10">10</option>
                         <option value="25">25</option>
                         <option value="50">50</option>
                     </select>
-                    <span>data</span>
+                    <label>data</label>
                 </div>
-            </div>
 
+            </div>
             <div class="panel">
                 <div class="panel-heading">
-                    <a href="/data-produk/tambah" class="btn btn-primary">Tambah</a>
+
                 </div>
                 <div class="panel-body">
-                    <table class="table table-striped">
+                    <table class="table table-hover">
                         <thead>
                         <tr>
                             <th>No.</th>
-                            <th class="col-md-6">Nama Produk</th>
-                            <th class="col-md-2">Nama Jenis</th>
-                            <th class="col-md-2">Harga Satuan</th>
-                            <th class="col-md-2">Stok</th>
-                            <th></th>
+                            <th>Tanggal</th>
+                            <th>ID</th>
+                            <th>Nama Produk</th>
+                            <th>Harga Satuan</th>
+                            <th>Jumlah</th>
+                            <th>Harga</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($produk as $value)
+                        @foreach($penjualan as $value)
                             <tr>
-                                <td>{{ (($produk->currentPage() - 1 ) * $produk->perPage() ) + $loop->iteration }}</td>
-                                <td>{{$value->nama_produk}}</td>
-                                <td>{{$value->kategori->nama_kategori}}</td>
-                                <td>Rp. {{$value->harga_satuan}}</td>
-                                <td></td>
-                                <td>
-                                    <a href="/data-produk/edit/{{$value->id_produk}}"><span class="label label-warning">EDIT</span></a>
-                                </td>
+                                <td>{{ (($penjualan->currentPage() - 1 ) * $penjualan->perPage() ) + $loop->iteration }}</td>
+                                <td>{{$value->pemesanan->tgl_pesan}}</td>
+                                <td>{{$value->pemesanan->id_pemesanan}}</td>
+                                <td>{{$value->produk->nama_produk}}</td>
+                                <td>{{$value->produk->harga_satuan}}</td>
+                                <td>{{$value->jumlah}}</td>
+                                <td>{{$value->harga}}</td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
-                    {!! $produk->render() !!}
+                    {!! $penjualan->render() !!}
                 </div>
             </div>
         </div>

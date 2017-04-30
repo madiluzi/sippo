@@ -3,13 +3,13 @@
 @section('content')
     <div class="main-content">
         <div class="container-fluid">
-            <a href="/data-produk" class="btn btn-danger pull-right"><i class="fa fa-close"></i></a>
+            <a href="/transaksi-masuk" class="btn btn-danger pull-right"><i class="fa fa-close"></i></a>
             <h3 class="page-title">Data Produk</h3>
             <div class="panel">
-                <form class="form-horizontal" data-validate="parsley" method="post" enctype="multipart/form-data"
-                      action="/data-produk/tambah">
+                <form class="form-horizontal" data-validate="parsley" method="post"
+                      action="/transaksi-masuk/tambah">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Tambah Data Produk</h3>
+                        <h3 class="panel-title">Tambah Data Transaksi Masuk</h3>
                     </div>
                     <div class="panel-body">
                         {!! csrf_field() !!}
@@ -18,19 +18,24 @@
                                 <label class="pull-right">Nama Produk</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="nama-produk">
+                                <select class="form-control" name="category" id="category">
+                                    <option value="" selected="selected">Pilih Kategori Produk</option>
+                                    @foreach($kategori as $k)
+                                        <option value="{{$k->id_kategori}}">{{$k->nama_kategori}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-md-4">
-                                <label class="pull-right">Kategori Produk</label>
+                                <label class="pull-right">Nama Produk</label>
                             </div>
                             <div class="col-md-6">
-                                <select class="form-control" name="kategori">
-                                    <option value="" selected="selected">Pilih Kategori Produk</option>
-                                    @foreach($kategori as $jns)
-                                        <option value="{{$jns->id_kategori}}">{{$jns->nama_kategori}}</option>
+                                <select class="form-control" name="nama-produk">
+                                    <option value="" selected="selected">Pilih Produk</option>
+                                    @foreach($produk as $p)
+                                        <option value="{{$p->id_produk}}">{{$p->nama_produk}}</option>
                                     @endforeach
                                 </select>
                                 {{--@foreach($kategori as $jns)--}}
@@ -44,37 +49,10 @@
                         <br>
                         <div class="row">
                             <div class="col-md-4">
-                                <label class="pull-right">Harga Satuan</label>
+                                <label class="pull-right">Jumlah</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="number" class="form-control" name="harga-satuan">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="pull-right">Berat</label>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="number" class="form-control" name="berat">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="pull-right">Gambar</label>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="file" name="gambar">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="pull-right">Keterangan</label>
-                            </div>
-                            <div class="col-md-6">
-                                <textarea class="form-control" name="keterangan" rows="4"></textarea>
+                                <input type="number" class="form-control" name="jumlah">
                             </div>
                         </div>
                     </div>
@@ -99,8 +77,28 @@
                             </div>
                         </div>
                     </div>
-
                 </form>
+                <script language="JavaScript" type="text/JavaScript">
+
+                    $('#category').change(function(e){
+                        alert("sukses");
+                        console.log(e);
+
+                        var cat_id = e.target.value;
+
+                        //ajax
+
+                        $.get('/ajax-subcat?cat_id=' + id_kategori, function(data){  // Ganti bagian ini......
+
+                            $('#subcategory').empty();
+
+                            $.each(data, function(index, subcatObj){
+                                $('#subcategory').append('<option value="'+subcatObj.id_kategori+'">'+subcatObj.nama_kategori+'</option>');
+                            });
+                        });
+                    });
+
+                </script>
             </div>
         </div>
     </div>

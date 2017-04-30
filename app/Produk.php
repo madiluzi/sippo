@@ -14,4 +14,14 @@ class Produk extends Model
     {
         return $this->belongsTo(Kategori::class, 'id_kategori');
     }
+
+    public function stok()
+    {
+        return $this->hasMany('App\Stok', 'id_produk');
+    }
+
+    public function detailPemesanan()
+    {
+        return $this->hasMany('App\DetailPemesanan', 'id_produk');
+    }
 }

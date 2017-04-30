@@ -30,22 +30,6 @@
                         <option value="12">Desember</option>
                     </select>
                 </div>
-                <div class="col-md-2">
-                    <select class="form-control input-sm" name="jenis">
-                        <option value="" selected="selected">Pilih Jenis Barang</option>
-                        @foreach($jenis as $jns)
-                            <option value={{$jns->id_jenis}}>{{$jns->nama_jenis}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <select class="form-control input-sm" name="barang">
-                        <option value="" selected="selected">Pilih Barang</option>
-                        @foreach($barang as $brg)
-                            <option value={{$brg->id_barang}}>{{$brg->nama_barang}}</option>
-                        @endforeach
-                    </select>
-                </div>
             </div>
         </div>
 
@@ -55,31 +39,30 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th>Tahun</th>
-                        <th>Bulan</th>
-                        <th>Data Aktual</th>
-                        <th>Data Prediksi</th>
-                        <th>at</th>
-                        <th>bt</th>
-                        <th>Ftm</th>
-                        <th>PE</th>
+                        <th>No.</th>
+                        <th>Tanggal</th>
+                        <th>ID</th>
+                        <th>Nama Produk</th>
+                        <th>Harga Satuan</th>
+                        <th>Jumlah</th>
+                        <th>Harga</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($ramal as $j)
+                    @foreach($stok as $value)
                         <tr>
-                            <td>{{date("Y", strtotime($j->tgl_jual))}}</td>
-                            <td>{{date("M", strtotime($j->tgl_jual))}}</td>
-                            <td>{{$j->jumlah}}</td>
-                            <td>{{$j->jumlah}}</td>
-                            <td>102</td>
-                            <td>102</td>
-                            <td>110</td>
-                            <td>102</td>
+                            <td>{{ (($stok->currentPage() - 1 ) * $stok->perPage() ) + $loop->iteration }}</td>
+                            <td>{{$value->id_produk}}</td>
+                            <td>{{$value->jumlah_stok}}</td>
+                            <td>
+                                <button type="button" class="btn btn-xs btn-warning">Ubah</button>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
+                {!! $stok->render() !!}
             </div>
         </div>
         <div id="toastr-demo" class="row">

@@ -3,7 +3,7 @@
 @section('content')
     <div class="main-content">
         <div class="container-fluid">
-            <h3 class="page-title">Peramalan Bulan Depan</h3>
+            <h3 class="page-title">Peramalan</h3>
             <div class="row">
                 <form action="/peramalan" method="post">
                     {!! csrf_field() !!}
@@ -19,7 +19,7 @@
                         <select class="form-control input-sm" name="bulan">
                             <option value="" selected="selected">Pilih Bulan</option>
                             @php($i = 1)
-                            @foreach($bulan as $bln)
+                            @foreach($pilihBulan as $bln)
                                 <option value="{{$i++}}">{{$bln}}</option>
                             @endforeach
                         </select>
@@ -63,21 +63,28 @@
                     </tr>
                     </thead>
                     <tbody>
-{{--                    @php ($i = 0)--}}
+                    {{--                    @php ($i = 0)--}}
                     {{--@foreach($tampil as $value)--}}
                     @for($i = 0;$i < 6;$i++)
-                    <tr>
-                        <td>/</td>
-                        <td>/</td>
-                        {{--<td>{{date("Y", strtotime($value->tgl_jual))}}</td>--}}
-                        {{--<td>{{date("M", strtotime($value->tgl_jual))}}</td>--}}
-                        <td>{{$data[$i]->jumlah}}</td>
-                        <td>{{$st[$i]}}</td>
-                        <td>{{$bt[$i]}}</td>
-                        {{--<td>{{$value->jumlah}}</td>--}}
-                        <td>{{$ftm[$i]}}</td>
-                        <td>{{$pe[$i]}}</td>
-                    </tr>
+                        <tr>
+                            <td>{{date("Y", strtotime($data[$i]->tgl_pesan))}}</td>
+                            <td>{{date("M", strtotime($data[$i]->tgl_pesan))}}</td>
+                            <td>{{$data[$i]->jumlah}}</td>
+                            <td>{{$st[$i]}}</td>
+                            <td>{{$bt[$i]}}</td>
+
+                            @if($ftm[$i]==null)
+                                <td>-</td>
+                            @elseif($ftm[$i]!=null)
+                                <td>{{$ftm[$i]}}</td>
+                            @endif
+
+                            @if($pe[$i]==null)
+                                <td>-</td>
+                            @elseif($pe[$i]!=null)
+                                <td>{{$pe[$i]}}</td>
+                            @endif
+                        </tr>
                     @endfor
                     {{--@endforeach--}}
                     </tbody>

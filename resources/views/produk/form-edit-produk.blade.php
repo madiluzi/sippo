@@ -7,7 +7,7 @@
             <h3 class="page-title">Data Produk</h3>
             <div class="panel">
                 <form class="form-horizontal" data-validate="parsley" method="post"
-                      action="/data-produk/proses-edit/{{$detail->id_produk}}">
+                      action="/data-produk/proses-edit/{{$produk->id_produk}}">
                     <div class="panel-heading">
                         <h3 class="panel-title">Edit Data Produk</h3>
                     </div>
@@ -18,20 +18,31 @@
                                 <label class="pull-right">Nama Produk</label>
                             </div>
                             <div class="col-md-6">
-                                <input value="{{$detail->nama_produk}}" type="text" class="form-control" placeholder="text field" name="nama-produk">
+                                <input type="text" class="form-control" name="nama-produk"
+                                       value="{{$produk->nama_produk}}">
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-md-4">
-                                <label class="pull-right">Jenis Produk</label>
+                                <label class="pull-right">Kategori Produk</label>
                             </div>
                             <div class="col-md-6">
                                 <select class="form-control" name="kategori">
-                                    @foreach($kategori as $value)
-                                        <option value="{{$value->id_kategori}}">{{$value->nama_kategori}}</option>
+                                    <option value="">Pilih Kategori Produk</option>
+                                    @foreach($kategori as $ktg)
+                                        <option value="{{$ktg->id_kategori}}"
+                                                @if($ktg->id_kategori==$produk->id_kategori) selected="selected"
+                                                @endif
+                                        >{{$ktg->nama_kategori}}</option>
                                     @endforeach
                                 </select>
+                                {{--@foreach($kategori as $jns)--}}
+                                {{--<label class="fancy-radio">--}}
+                                {{--<input name="id_kategori" value="{{$jns->id_kategori}}" type="radio">--}}
+                                {{--<span><i></i> {{$jns->nama_kategori}} </span>--}}
+                                {{--</label>--}}
+                                {{--@endforeach--}}
                             </div>
                         </div>
                         <br>
@@ -40,7 +51,38 @@
                                 <label class="pull-right">Harga Satuan</label>
                             </div>
                             <div class="col-md-6">
-                                <input value="{{$detail->harga_satuan}}" type="number" class="form-control" placeholder="text field" name="harga-satuan">
+                                <input type="number" class="form-control" name="harga-satuan"
+                                       value="{{$produk->harga_satuan}}">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="pull-right">Berat</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" name="berat" value="{{$produk->berat}}">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="pull-right">Gambar</label>
+                            </div>
+                            <div class="col-md-6">
+                                <img src="/images/{{$produk->gambar}}">
+                                <br>
+                                <input type="file" name="gambar">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="pull-right">Keterangan</label>
+                            </div>
+                            <div class="col-md-6">
+                                <textarea class="form-control" name="keterangan"
+                                          rows="4">{{$produk->keterangan}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -48,7 +90,7 @@
                         <a type="button" class="btn btn-success" data-toggle="modal" data-target="#simpan">Simpan</a>
                         <a href="/data-produk" type="button" class="btn btn-default">Batal</a>
                         <a type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#hapus">Hapus</a>
-                        {{--<a href="/data-produk/hapus/{{$detail->id_produk}}" class="btn btn-danger pull-right">Hapus</a>--}}
+                        {{--<a href="/data-produk/hapus/{{$produk->id_produk}}" class="btn btn-danger pull-right">Hapus</a>--}}
                     </div>
 
                     <!-- Modal Simpan -->
@@ -78,7 +120,8 @@
                                     <h4 class="modal-title">Apakah Anda yakin?</h4>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="/data-produk/hapus/{{$detail->id_produk}}" type="submit" class="btn btn-success">Ya</a>
+                                    <a href="/data-produk/hapus/{{$produk->id_produk}}" type="submit"
+                                       class="btn btn-success">Ya</a>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Tidak</button>
                                 </div>
                             </div>

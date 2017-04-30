@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Kategori;
 use App\Produk;
-use Illuminate\Http\Request;
 use App\Stok;
+use Illuminate\Http\Request;
 
-class ProdukMasukController extends Controller
+class TransaksiMasukController extends Controller
 {
     public function __construct()
     {
@@ -16,7 +16,7 @@ class ProdukMasukController extends Controller
 
     public function index()
     {
-        $stok = Stok::orderBy('created_at', 'desc')->paginate(10);
+        $stok = Stok::orderBy('updated_at', 'desc')->paginate(10);
 //        $stok = Stok::raw('id_produk, sum(jumlah_stok) as stok')
 //                ->groupBy('id_produk')
 //                ->orderBy('created_at')
@@ -52,9 +52,35 @@ class ProdukMasukController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'jumlah' => 'required|max:50',
+        ]);
+
         $stok = new Stok();
-        $stok->id_produk = $request->input('nama-produk');
-        $stok->jumlah_stok = $request->input('jumlah-stok');
+        $stok->id_produk = $request->input('produk');
+        $stok->jumlah_stok = $request->input('jumlah');
         $stok->save();
+        return redirect('/transaksi-masuk');
+    }
+
+    public function update($id)
+    {
+        $stok = Stok::find($id);
+        $kategori = Kategori::all();
+        $produk = Produk::all();
+        return view('transaksi-masuk.form-edit-transaksi-masuk', compact('stok', 'kategori', 'produk'));
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $this->validate($request, [
+            'jumlah' => 'required|max:50',
+        ]);
+
+        $stok = Stok::find($id);
+        $stok->id_produk = $request->input('produk');
+        $stok->jumlah_stok = $request->input('jumlah');
+        $stok->save();
+        return redirect('/transaksi-masuk');
     }
 }

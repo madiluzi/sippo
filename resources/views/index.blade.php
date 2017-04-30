@@ -4,8 +4,49 @@
     <!-- MAIN CONTENT -->
     <div class="main-content">
         <div class="container-fluid">
-            <!-- OVERVIEW -->
+            <!-- ADD ITEMS -->
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <a class="btn btn-lg btn-info">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <i style="line-height: 200%;" class="fa fa-download fa-lg"></i>
+                            </div>
+                            <div class="col-md-8">
+                                <i class="fa fa-plus"></i><br>
+                                <small>Transaksi Masuk</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 text-center">
+                    <a class="btn btn-lg btn-info">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <i style="line-height: 200%;" class="fa fa-download fa-lg pull-left"></i>
+                            </div>
+                            <div class="col-md-8">
+                                <span>List Group<br><small>Lorem ipsum dolor</small></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 text-center">
+                    <a class="btn btn-lg btn-info">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <i style="line-height: 200%;" class="fa fa-download fa-lg pull-left"></i>
+                            </div>
+                            <div class="col-md-8">
+                                <span>List Group<br><small>Lorem ipsum dolor</small></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <br>
 
+            <!-- OVERVIEW -->
             <div class="panel panel-headline">
                 <div class="panel-heading">
                     <h3 class="panel-title">Weekly Overview</h3>
@@ -17,8 +58,8 @@
                             <div class="metric">
                                 <span class="icon"><i class="fa fa-download"></i></span>
                                 <p>
-                                    <span class="number">1,252</span>
-                                    <span class="title">Downloads</span>
+                                    <span class="number">{{$masuk}}</span>
+                                    <span class="title">Produk Masuk</span>
                                 </p>
                             </div>
                         </div>
@@ -26,8 +67,8 @@
                             <div class="metric">
                                 <span class="icon"><i class="fa fa-shopping-bag"></i></span>
                                 <p>
-                                    <span class="number">203</span>
-                                    <span class="title">Sales</span>
+                                    <span class="number">{{$jual}}</span>
+                                    <span class="title">Barang Terjual</span>
                                 </p>
                             </div>
                         </div>
@@ -35,8 +76,8 @@
                             <div class="metric">
                                 <span class="icon"><i class="fa fa-eye"></i></span>
                                 <p>
-                                    <span class="number">274,678</span>
-                                    <span class="title">Visits</span>
+                                    <span class="number">{{$transaksi}}</span>
+                                    <span class="title">Penjualan</span>
                                 </p>
                             </div>
                         </div>
@@ -44,8 +85,8 @@
                             <div class="metric">
                                 <span class="icon"><i class="fa fa-bar-chart"></i></span>
                                 <p>
-                                    <span class="number">35%</span>
-                                    <span class="title">Conversions</span>
+                                    <span class="number">Rp. {{$penghasilan}}</span>
+                                    <span class="title">Penghasilan</span>
                                 </p>
                             </div>
                         </div>
