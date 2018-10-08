@@ -4,28 +4,6 @@
     <div class="main-content">
         <div class="container-fluid">
             <h3 class="page-title">Data Transaksi Barang Keluar</h3>
-            <div class="row">
-                <div class="col-md-3">
-                    <form class="navbar-form navbar-left hidden-xs">
-                        <div class="input-group">
-                            <input type="text" value="" class="form-control" placeholder="Cari">
-                            <span class="input-group-btn"><button type="button"
-                                                                  class="btn btn-primary"><i
-                                            class="lnr lnr-magnifier"></i></button></span>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-1 col-md-offset-2">
-                    <label>Tampilkan</label>
-                    <select class="form-control input-sm">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                    </select>
-                    <label>data</label>
-                </div>
-
-            </div>
             <div class="panel">
                 <div class="panel-heading">
 
@@ -35,12 +13,12 @@
                         <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Tanggal</th>
-                            <th>ID</th>
+                            <th>Tanggal Transaksi</th>
+                            <th>ID Transaksi</th>
                             <th>Nama Produk</th>
                             <th>Harga Satuan</th>
                             <th>Jumlah</th>
-                            <th>Harga</th>
+                            <th>Total Harga</th>
                         </tr>
                         </thead>
                         <tbody>

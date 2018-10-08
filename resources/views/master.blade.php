@@ -10,8 +10,7 @@
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/vendor/icon-sets.css">
     <link rel="stylesheet" href="/assets/css/main.min.css">
-    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-    <link rel="stylesheet" href="/assets/css/demo.css">
+    <link rel="stylesheet" href="/assets/css/datatables.bootstrap.css">
     <!-- GOOGLE FONTS -->
     <link href="/assets/css/fonts.css" rel="stylesheet">
     <!-- ICONS -->
@@ -31,7 +30,7 @@
             <nav>
                 <ul class="nav">
                     @if(Auth::user()->admin==0)
-                        <li><a href="/" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                        <li><a href="/"><i class="lnr lnr-home"></i><span>Dashboard</span></a></li>
                         <li>
                             <a href="#subPages3" data-toggle="collapse" class="collapsed"><i
                                         class="lnr lnr-database"></i>
@@ -43,23 +42,42 @@
                                 </ul>
                             </div>
                         </li>
+                        <li>
+                            <a href="#subPages4" data-toggle="collapse" class="collapsed"><i
+                                        class="lnr lnr-chart-bars"></i>
+                                <span>Laporan
+                                    @if ($stok->count() <> 0)
+                                        <span class="badge bg-danger">1</span>
+                                    @endif
+                                </span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subPages4" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="/laporan-penjualan" class="">Laporan Penjualan</a></li>
+                                    <li><a href="/laporan-stok" class="">Laporan Stok
+                                            @if ($stok->count() <> 0)
+                                                <span class="badge bg-danger">{{$stok->count()}}</span>
+                                            @endif
+                                        </a></li>
+                                </ul>
+                            </div>
+                        </li>
                     @else(Auth::user()->admin==1)
-                        <li><a href="/" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                        <li><a href="/" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
                         <li>
                             <a href="#subPages2" data-toggle="collapse" class="collapsed"><i
                                         class="lnr lnr-database"></i>
                                 <span>Data Master</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPages2" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="/data-produk" class="">Data Produk</a></li>
+                                    {{--<li><a href="/data-produk" class="">Data Produk</a></li>--}}
                                     <li><a href="/data-kategori-produk" class="">Data Kategori Produk</a></li>
-                                    <li><a href="/data-pengguna" class="">Data Pengguna</a></li>
+                                    <li><a href="/data-pengguna" class="">Data Kasir</a></li>
                                 </ul>
                             </div>
                         </li>
                         <li>
                             <a href="#subPages3" data-toggle="collapse" class="collapsed"><i
-                                        class="lnr lnr-database"></i>
+                                        class="lnr lnr-cart"></i>
                                 <span>Transaksi</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPages3" class="collapse ">
                                 <ul class="nav">
@@ -68,8 +86,25 @@
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="/laporan-penjualan" class=""><i class="lnr lnr-chart-bars"></i>
-                                <span>Laporan Penjualan</span></a></li>
+                        <li>
+                            <a href="#subPages4" data-toggle="collapse" class="collapsed"><i
+                                        class="lnr lnr-chart-bars"></i>
+                                <span>Laporan
+                                    @if ($stok->count() <> 0)
+                                        <span class="badge bg-danger">1</span>
+                                    @endif
+                                </span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subPages4" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="/laporan-penjualan" class="">Laporan Penjualan</a></li>
+                                    <li><a href="/laporan-stok" class="">Laporan Stok
+                                            @if ($stok->count() <> 0)
+                                                <span class="badge bg-danger">{{$stok->count()}}</span>
+                                            @endif
+                                        </a></li>
+                                </ul>
+                            </div>
+                        </li>
                         <li><a href="/peramalan" class=""><i class="lnr lnr-pie-chart"></i>
                                 <span>Peramalan</span></a></li>
                     @endif
@@ -95,33 +130,7 @@
                     </button>
                 </div>
                 <div id="navbar-menu" class="navbar-collapse collapse">
-                    <form class="navbar-form navbar-left hidden-xs">
-                        <div class="input-group">
-                            <input type="text" value="" class="form-control" placeholder="Search dashboard...">
-                            <span class="input-group-btn"><button type="button"
-                                                                  class="btn btn-primary">Go</button></span>
-                        </div>
-                    </form>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
-                                <i class="lnr lnr-alarm"></i>
-                                <span class="badge bg-danger">5</span>
-                            </a>
-                            <ul class="dropdown-menu notifications">
-                                <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System
-                                        space is almost full</a></li>
-                                <li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9
-                                        unfinished tasks</a></li>
-                                <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly
-                                        report is available</a></li>
-                                <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly
-                                        meeting in 1 hour</a></li>
-                                <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your
-                                        request has been approved</a></li>
-                                <li><a href="#" class="more">See all notifications</a></li>
-                            </ul>
-                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/assets/img/user.png"
                                                                                             class="img-circle"
@@ -154,8 +163,11 @@
 <script src="/assets/js/plugins/jquery-easypiechart/jquery.easypiechart.min.js"></script>
 <script src="/assets/js/plugins/toastr/toastr.min.js"></script>
 <script src="/assets/js/plugins/chartist/chartist.min.js"></script>
-<script src="/assets/js/klorofil.min.js"></script>
-
+<script src="/assets/js/klorofil.js"></script>
+<script src="/assets/js/jquery.dataTables.min.js"></script>
+<script src="/assets/js/datatables.bootstrap.js"></script>
+<script src="/assets/js/plugins/Chart/Chart.min.js"></script>
+@yield('script')
 </body>
 
 </html>

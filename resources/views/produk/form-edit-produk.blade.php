@@ -6,8 +6,8 @@
             <a href="/data-produk" class="btn btn-danger pull-right"><i class="fa fa-close"></i></a>
             <h3 class="page-title">Data Produk</h3>
             <div class="panel">
-                <form class="form-horizontal" data-validate="parsley" method="post"
-                      action="/data-produk/proses-edit/{{$produk->id_produk}}">
+                <form class="form-horizontal" data-validate="parsley" method="post" enctype="multipart/form-data"
+                      action="/data-produk/edit/{{$produk->id_produk}}">
                     <div class="panel-heading">
                         <h3 class="panel-title">Edit Data Produk</h3>
                     </div>
@@ -64,17 +64,17 @@
                                 <input type="number" class="form-control" name="berat" value="{{$produk->berat}}">
                             </div>
                         </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="pull-right">Gambar</label>
-                            </div>
-                            <div class="col-md-6">
-                                <img src="/images/{{$produk->gambar}}">
-                                <br>
-                                <input type="file" name="gambar">
-                            </div>
-                        </div>
+                        {{--<br>--}}
+                        {{--<div class="row">--}}
+                            {{--<div class="col-md-4">--}}
+                                {{--<label class="pull-right">Gambar</label>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-6">--}}
+                                {{--<img src="/{{$produk->gambar}}">--}}
+                                {{--<br>--}}
+                                {{--<input type="file" name="gambar" data-label="Pilih File">--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                         <br>
                         <div class="row">
                             <div class="col-md-4">
@@ -88,7 +88,7 @@
                     </div>
                     <div class="panel-footer">
                         <a type="button" class="btn btn-success" data-toggle="modal" data-target="#simpan">Simpan</a>
-                        <a href="/data-produk" type="button" class="btn btn-default">Batal</a>
+                        <a href="{{url()->previous()}}" type="button" class="btn btn-default">Batal</a>
                         <a type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#hapus">Hapus</a>
                         {{--<a href="/data-produk/hapus/{{$produk->id_produk}}" class="btn btn-danger pull-right">Hapus</a>--}}
                     </div>
@@ -117,7 +117,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Apakah Anda yakin?</h4>
+                                    <h4 class="modal-title">Apakah Anda yakin ingin menghapus data ini?</h4>
                                 </div>
                                 <div class="modal-footer">
                                     <a href="/data-produk/hapus/{{$produk->id_produk}}" type="submit"

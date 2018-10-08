@@ -18,17 +18,21 @@
                                 <label class="pull-right">Nama Kategori Produk</label>
                             </div>
                             <div class="col-md-6">
-                                <input id="nama-kategori" type="text" class="form-control" name="nama-kategori"
-                                       value="{{ old('nama-kategori') }}" required>
-
+                                <input type="text" class="form-control" name="nama-kategori"
+                                       value="{{ old('nama-kategori') }}">
                                 @if ($errors->has('nama-kategori'))
-                                    <span class="help-block">
-                                        <p>{{ $errors->first('nama-kategori') }}</p>
-                                    </span>
+                                    <span class="label label-danger">{{ $errors->first('nama-kategori') }}</span>
                                 @endif
                             </div>
                         </div>
+                        {{--<br>--}}
+                        {{--<ul>--}}
+                            {{--@foreach($errors->all() as $error)--}}
+                                {{--<span class="label label-danger">{{$error}}</span>--}}
+                            {{--@endforeach--}}
+                        {{--</ul>--}}
                     </div>
+
                     <div class="panel-footer">
                         <a type="button" class="btn btn-success" data-toggle="modal" data-target="#simpan">Simpan</a>
                         <a href="/data-kategori-produk" class="btn btn-default">Batal</a>

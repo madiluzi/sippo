@@ -15,9 +15,9 @@
         <!--content-->
         <div class="content-top">
             <div class="col-md-4">
-                <a href="transaksi-masuk" class="btn-primary btn-home col-md-12">
+                <a href="barang-masuk" class="btn-primary btn-home col-md-12">
                     <i class="fa fa-lg fa-mail-reply col-md-3"></i> Tambah Barang Masuk</a>
-                <a href="transaksi-keluar" class="btn-warning btn-home col-md-12">
+                <a href="barang-keluar" class="btn-warning btn-home col-md-12">
                     <i class="fa fa-lg fa-mail-forward col-md-3"></i> Tambah Barang Keluar</a>
             </div>
             <div class="col-md-4">

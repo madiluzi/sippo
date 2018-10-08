@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\DetailPemesanan;
 use App\Pemesanan;
-use App\Stok;
-use Illuminate\Http\Request;
+use App\Produk;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -16,10 +16,16 @@ class HomeController extends Controller
 
     public function index()
     {
-        $jual= DetailPemesanan::sum('jumlah');
-        $masuk= Stok::sum('jumlah_stok');
-        $transaksi= Pemesanan::count();
-        $penghasilan = DetailPemesanan::sum('harga');
-        return view('index', compact('jual', 'masuk', 'transaksi', 'penghasilan'));
+        $coklat = Produk::coklat()->first();
+        $kopi = Produk::kopi()->first();
+        $kopiLuwak = Produk::kopiLuwak()->first();
+        $sabun = Produk::sabun()->first();
+        $produkHabis = Produk::stokHabis()->count();
+        $produkHampirHabis = Produk::stokHampirHabis()->count();
+        $totalStok = Produk::totalStok();
+        $masukTerbaru = Produk::orderBy('updated_at', 'desc')->take(5)->get();
+        $hampirHabis = Produk::stokHampirHabis()->take(5)->get();
+
+        return view('index', compact('coklat', 'kopi', 'kopiLuwak', 'sabun', 'hampirHabis', 'masukTerbaru', 'produkHampirHabis', 'produkHabis', 'totalStok'));
     }
 }

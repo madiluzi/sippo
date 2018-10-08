@@ -4,27 +4,7 @@
     <div class="main-content">
         <div class="container-fluid">
             <h3 class="page-title">Data Pengguna</h3>
-            <div class="row">
-                <div class="col-md-3">
-                    <form class="navbar-form navbar-left hidden-xs">
-                        <div class="input-group">
-                            <input type="text" value="" class="form-control" placeholder="Temukan...">
-                            <span class="input-group-btn"><button type="button"
-                                                                  class="btn btn-primary">Cari</button></span>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-2 col-md-offset-2">
-                    <span>Tampilkan</span>
-                    <select class="form-control input-sm">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                    </select>
-                    <span>data</span>
-                </div>
 
-            </div>
             <div class="panel">
                 <div class="panel-heading">
                     <a href="" class="btn btn-primary">Tambah</a>
@@ -34,9 +14,9 @@
                         <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Tanggal Transaksi</th>
-                            <th>Nama Barang</th>
-                            <th>Jumlah Barang</th>
+                            <th>Nama</th>
+                            <th>Nama Pengguna</th>
+                            <th>E-mail</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -47,9 +27,8 @@
                                 <td>{{$value->name}}</td>
                                 <td>{{$value->username}}</td>
                                 <td>{{$value->email}}</td>
-                                <td>5</td>
                                 <td>
-                                    <button type="button" class="btn btn-xs btn-warning">Ubah</button>
+                                    <a href="/data-produk/edit/{{$value->id_produk}}"><span class="label label-warning">EDIT</span></a>
                                 </td>
                             </tr>
                         @endforeach

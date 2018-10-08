@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Kategori;
 use App\Produk;
-use App\Stok;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Yajra\Datatables\Datatables;
 
 class TransaksiMasukController extends Controller
 {
@@ -16,24 +17,23 @@ class TransaksiMasukController extends Controller
 
     public function index()
     {
-        $stok = Stok::orderBy('updated_at', 'desc')->paginate(10);
-//        $stok = Stok::raw('id_produk, sum(jumlah_stok) as stok')
-//                ->groupBy('id_produk')
-//                ->orderBy('created_at')
-//                ->get();
+        return view('transaksi-masuk.transaksi-masuk');
+    }
 
-//        $stok = DB::table('itemcosts')
-//            ->selectRaw('costType, sum(amountCost) as sum')
-//            ->groupBy('costType')
-//            ->lists('sum', 'costType');
-
-//        $stok = Stok::sum('jumlah_stok')
-//            ->groupBy('id_produk')
-//            ->get();
-
-//        $stok = Stok::orderBy('id_produk')
-//            ->get();
-        return view('transaksi-masuk.transaksi-masuk', compact('stok'));
+    public function dataStok()
+    {
+        $stoks = Produk::all();
+        return Datatables::of($stoks)
+            ->addColumn('action', function ($stok) {
+                if (Auth::user()->admin == 0) {
+                    return '<a href="/transaksi-masuk/tambah/' . $stok->id_produk . '"><span class="label label-primary">TAMBAH</span>
+                </a><a href="/transaksi-masuk/edit/' . $stok->id_produk . '"><span class="label label-warning">EDIT</span></a>';
+                }
+            })
+//            ->addColumn('edit', function ($stok) {
+//                return '<a href="/transaksi-masuk/edit/' . $stok->id_produk . '"><span class="label label-warning">EDIT</span></a>';
+//            })
+            ->make(true);
     }
 
     public function ajax() // Tanpa (Request $request, $id)
@@ -43,44 +43,35 @@ class TransaksiMasukController extends Controller
         return Response::json($subcategories);
     }
 
-    public function create()
+    public function create($id)
     {
-        $kategori = Kategori::all();
-        $produk = Produk::all();
-        return view('transaksi-masuk.form-transaksi-masuk', compact('kategori', 'produk'));
+        $stok = Produk::find($id);
+        return view('transaksi-masuk.form-transaksi-masuk', compact('kategori', 'produks', 'stok'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        $this->validate($request, [
-            'jumlah' => 'required|max:50',
-        ]);
-
-        $stok = new Stok();
-        $stok->id_produk = $request->input('produk');
-        $stok->jumlah_stok = $request->input('jumlah');
-        $stok->save();
+        $stok = Produk::find($id);
+//        $stok->id_produk = $request->input('produk');
+        $stok->jumlah_stok = ($request->input('jumlah') + $stok->jumlah_stok);
+        $stok->update();
         return redirect('/transaksi-masuk');
+
     }
 
     public function update($id)
     {
-        $stok = Stok::find($id);
-        $kategori = Kategori::all();
-        $produk = Produk::all();
-        return view('transaksi-masuk.form-edit-transaksi-masuk', compact('stok', 'kategori', 'produk'));
+        $stok = Produk::find($id);
+        return view('transaksi-masuk.form-edit-transaksi-masuk', compact('stok'));
     }
 
     public function edit(Request $request, $id)
     {
-        $this->validate($request, [
-            'jumlah' => 'required|max:50',
-        ]);
-
-        $stok = Stok::find($id);
+        $stok = Produk::find($id);
         $stok->id_produk = $request->input('produk');
         $stok->jumlah_stok = $request->input('jumlah');
-        $stok->save();
+        $stok->timestamps = false;
+        $stok->update();
         return redirect('/transaksi-masuk');
     }
 }

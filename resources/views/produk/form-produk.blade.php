@@ -6,7 +6,8 @@
             <a href="/data-produk" class="btn btn-danger pull-right"><i class="fa fa-close"></i></a>
             <h3 class="page-title">Data Produk</h3>
             <div class="panel">
-                <form class="form-horizontal" data-validate="parsley" method="post" enctype="multipart/form-data"
+                <form class="form-horizontal" data-validate="parsley" method="post"
+                      {{--enctype="multipart/form-data"--}}
                       action="/data-produk/tambah">
                     <div class="panel-heading">
                         <h3 class="panel-title">Tambah Data Produk</h3>
@@ -19,6 +20,10 @@
                             </div>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="nama-produk">
+
+                                @if ($errors->has('nama-produk'))
+                                    <span class="label label-danger">{{ $errors->first('nama-produk') }}</span>
+                                @endif
                             </div>
                         </div>
                         <br>
@@ -33,12 +38,10 @@
                                         <option value="{{$jns->id_kategori}}">{{$jns->nama_kategori}}</option>
                                     @endforeach
                                 </select>
-                                {{--@foreach($kategori as $jns)--}}
-                                {{--<label class="fancy-radio">--}}
-                                {{--<input name="id_kategori" value="{{$jns->id_kategori}}" type="radio">--}}
-                                {{--<span><i></i> {{$jns->nama_kategori}} </span>--}}
-                                {{--</label>--}}
-                                {{--@endforeach--}}
+
+                                @if ($errors->has('kategori'))
+                                    <span class="label label-danger">{{ $errors->first('kategori') }}</span>
+                                @endif
                             </div>
                         </div>
                         <br>
@@ -48,6 +51,10 @@
                             </div>
                             <div class="col-md-6">
                                 <input type="number" class="form-control" name="harga-satuan">
+
+                                @if ($errors->has('harga-satuan'))
+                                    <span class="label label-danger">{{ $errors->first('harga-satuan') }}</span>
+                                @endif
                             </div>
                         </div>
                         <br>
@@ -57,17 +64,21 @@
                             </div>
                             <div class="col-md-6">
                                 <input type="number" class="form-control" name="berat">
+
+                                @if ($errors->has('berat'))
+                                    <span class="label label-danger">{{ $errors->first('berat') }}</span>
+                                @endif
                             </div>
                         </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="pull-right">Gambar</label>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="file" name="gambar">
-                            </div>
-                        </div>
+                        {{--<br>--}}
+                        {{--<div class="row">--}}
+                        {{--<div class="col-md-4">--}}
+                        {{--<label class="pull-right">Gambar</label>--}}
+                        {{--</div>--}}
+                        {{--<div class="col-md-6">--}}
+                        {{--<input type="file" name="gambar">--}}
+                        {{--</div>--}}
+                        {{--</div>--}}
                         <br>
                         <div class="row">
                             <div class="col-md-4">
@@ -76,10 +87,14 @@
                             <div class="col-md-6">
                                 <textarea class="form-control" name="keterangan" rows="4"></textarea>
                             </div>
+
+
                         </div>
+
                     </div>
                     <div class="panel-footer">
-                        <a type="button" class="btn btn-success" data-toggle="modal" data-target="#simpan">Simpan</a>
+                        <a type="button" class="btn btn-success" data-toggle="modal"
+                           data-target="#simpan">Simpan</a>
                         <a href="/data-produk" class="btn btn-default">Batal</a>
                     </div>
 

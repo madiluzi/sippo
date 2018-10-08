@@ -1,13 +1,13 @@
 @extends('master')
-@section('title', 'Tambah Data Produk|Sistem Persediaan Produk')
+@section('title', 'Edit Data Transaksi Masuk|Sistem Persediaan Produk')
 @section('content')
     <div class="main-content">
         <div class="container-fluid">
             <a href="/transaksi-masuk" class="btn btn-danger pull-right"><i class="fa fa-close"></i></a>
-            <h3 class="page-title">Data Produk</h3>
+            <h3 class="page-title">Data Transaksi Masuk</h3>
             <div class="panel">
                 <form class="form-horizontal" data-validate="parsley" method="post"
-                      action="/transaksi-masuk/edit/{{$stok->id_stok}}">
+                      action="/transaksi-masuk/edit/{{$stok->id_produk}}">
                     <div class="panel-heading">
                         <h3 class="panel-title">Edit Data Transaksi Masuk</h3>
                     </div>
@@ -18,14 +18,8 @@
                                 <label class="pull-right">Nama Kategori Produk</label>
                             </div>
                             <div class="col-md-6">
-                                <select class="form-control" name="kategori" id="kategori">
-                                    <option value="" selected="selected">Pilih Kategori Produk</option>
-                                    @foreach($kategori as $ktg)
-                                        <option value="{{$ktg->id_kategori}}"
-                                                @if($ktg->id_kategori==$stok->produk->kategori->id_kategori) selected="selected"
-                                                @endif
-                                        >{{$ktg->nama_kategori}}</option>
-                                    @endforeach
+                                <select class="form-control" name="kategori" id="kategori" disabled>
+                                    <option value="{{$stok->id_kategori}}" selected="selected">{{$stok->kategori->nama_kategori}}</option>
                                 </select>
                             </div>
                         </div>
@@ -35,21 +29,15 @@
                                 <label class="pull-right">Nama Produk</label>
                             </div>
                             <div class="col-md-6">
-                                <select class="form-control" name="produk" id="produk">
-                                    <option value="" selected="selected">Pilih Produk</option>
-                                    @foreach($produk as $pdk)
-                                        <option value="{{$pdk->id_produk}}"
-                                                @if($pdk->id_produk==$stok->id_produk) selected="selected"
-                                                @endif
-                                        >{{$pdk->nama_produk}}</option>
-                                    @endforeach
+                                <select class="form-control" name="produk" id="produk" disabled>
+                                    <option value="{{$stok->id_produk}}" selected="selected">{{$stok->nama_produk}}</option>
                                 </select>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-md-4">
-                                <label class="pull-right">Jumlah</label>
+                                <label class="pull-right">Jumlah Stok Tersedia</label>
                             </div>
                             <div class="col-md-6">
                                 <input type="number" class="form-control" name="jumlah" value="{{$stok->jumlah_stok}}">
@@ -58,7 +46,7 @@
                     </div>
                     <div class="panel-footer">
                         <a type="button" class="btn btn-success" data-toggle="modal" data-target="#simpan">Simpan</a>
-                        <a href="/data-produk" class="btn btn-default">Batal</a>
+                        <a href="{{url()->previous()}}" class="btn btn-default">Batal</a>
                     </div>
 
                     <!-- Modal -->

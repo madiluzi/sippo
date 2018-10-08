@@ -2,16 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\DetailPemesanan;
 use App\Pemesanan;
 use App\Produk;
-use App\Kategori;
 use Illuminate\Http\Request;
-use App\Penjualan;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
-use phpDocumentor\Reflection\Types\Array_;
 
 
 class PeramalanController extends Controller
@@ -21,67 +14,48 @@ class PeramalanController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $pilihBulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus",
-            "September", "Oktober", "November", "Desember");
         $produk = Produk::all();
-        $kategori = Kategori::all();
-
-        $tahun = 2017;
-        $bulan = 2;
-        $alpha = 0.1;
-        $gamma = 0.2;
+        $alpha = 0.5;
         $st = Array();
         $bt = Array();
         $ftm = Array();
         $pe = Array();
-//        $data = Pemesanan::all();
-//        $data = DetailPemesanan::all();
+        $yt = Array();
+        $ft = Array();
+        $f2t = Array();
+        $at = Array();
+        $bt = Array();
+        $ftp = Array();
 
-        $data = DB::table('detail_pemesanan')
-            ->join('pemesanan', 'detail_pemesanan.id_pemesanan', '=', 'pemesanan.id_pemesanan')
-            ->select('pemesanan.tgl_pesan as tgl_pesan', DB::raw('SUM(detail_pemesanan.jumlah) as jumlah'))
-            ->groupBy('pemesanan.tgl_pesan')
-            ->get();
-
-        $week = pemesanan::select('id_pemesanan')
-            ->where('tgl_pesan', '>=', 'DATE_ADD(NOW(), INTERVAL -6 DAY))')
-            ->get();
-
-//        dd($week);
-//        $z = 1.64; //service level = 95%
-        for ($i = 0; $i < 6; $i++) {
+        if ($request->id) {
+            $data = Pemesanan::peramalan()
+                ->where('dp.id_produk', '=', $request->id)->get();
+        } else {
+            $data = Pemesanan::peramalan()->get();
+        }
+        for ($i = 0; $i < count($data); $i++) {
+//            BROWN=============================================================
             if ($i == 0) {
-                $st[$i] = $data[$i]->jumlah;
-                $bt[$i] = $data[$i + 1]->jumlah - $data[$i]->jumlah;
-                $ftm[$i] = null;
+                $yt[$i] = $data[$i]->jumlah;
+                $ft[$i] = $data[$i]->jumlah;
+                $f2t[$i] = $data[$i]->jumlah;
+                $at[$i] = null;
+                $bt[$i] = null;
+                $ftp[$i] = null;
                 $pe[$i] = null;
-//                dd($st[$i],$bt[$i],$ftm[$i],$mape[$i]);
             } else {
-                $st[$i] = $alpha * $data[$i]->jumlah + (1 - $alpha) * ($st[$i - 1] + $bt[$i - 1]);
-                $bt[$i] = $gamma * ($st[$i] - $st[$i - 1]) + (1 - $gamma) * $bt[$i - 1];
-                $ftm[$i] = ($st[$i - 1] + $bt[$i - 1]) * 1;
-                $pe[$i] = (($data[$i]->jumlah - $ftm[$i]) / $data[$i]->jumlah) * 100;
-            }
-            if ($pe[$i] < 0) {
-                $pe[$i] = abs($pe[$i]);
+                $yt[$i] = $data[$i]->jumlah;
+                $ft[$i] = ($alpha * $yt[$i]) + (1 - $alpha) * $ft[$i - 1];
+                $f2t[$i] = ($alpha * $ft[$i]) + (1 - $alpha) * $f2t[$i - 1];
+                $at[$i] = (2 * $ft[$i]) - $f2t[$i];
+                $bt[$i] = ($alpha / (1 - $alpha)) * ($ft[$i] - $f2t[$i]);
+                $ftp[$i] = $at[$i] + $bt[$i];
+                $pe[$i] = abs((($yt[$i] - $ftp[$i]) / $yt[$i]) * 100);
             }
         }
-
-        $mape = ($pe[1] + $pe[2] + $pe[3] + $pe[4] + $pe[5]) / 5;
-        return view('peramalan', compact('produk', 'kategori', 'pilihBulan', 'data', 'st', 'bt', 'ftm', 'pe', 'mape'));
-    }
-
-    public function show(Request $request)
-    {
-        $tahun = $request->input('tahun');
-        $bulan = $request->input('bulan');
-        $barang = $request->input('produk');
-        $tampil = Penjualan::whereYear('tgl_jual', $tahun)
-            ->whereMonth('tgl_jual', $bulan)
-            ->where('id_barang', '=', $barang)
-            ->get();
-        return redirect('/peramalan/show');
+        $mape = ($pe[1] + $pe[2] + $pe[3] + $pe[4] + $pe[5] + $pe[6]) / 6;
+        return view('peramalan', compact('data', 'yt', 'ft', 'f2t', 'at', 'bt', 'ftp', 'pe', 'produk', 'mape'));
     }
 }

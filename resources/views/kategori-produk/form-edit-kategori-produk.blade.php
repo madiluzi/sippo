@@ -58,7 +58,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Apakah Anda yakin?</h4>
+                                    <h4 class="modal-title">Apakah Anda yakin ingin menghapus data ini?</h4>
                                 </div>
                                 <div class="modal-footer">
                                     <a href="/data-kategori-produk/hapus/{{$kategori->id_kategori}}" type="submit" class="btn btn-success">Ya</a>

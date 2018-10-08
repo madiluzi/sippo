@@ -7,7 +7,7 @@
             <h3 class="page-title">Data Produk</h3>
             <div class="panel">
                 <form class="form-horizontal" data-validate="parsley" method="post"
-                      action="/transaksi-masuk/tambah">
+                      action="/transaksi-masuk/tambah/{{$stok->id_produk}}">
                     <div class="panel-heading">
                         <h3 class="panel-title">Tambah Data Transaksi Masuk</h3>
                     </div>
@@ -15,14 +15,12 @@
                         {!! csrf_field() !!}
                         <div class="row">
                             <div class="col-md-4">
-                                <label class="pull-right">Nama Produk</label>
+                                <label class="pull-right">Nama Kategori Produk</label>
                             </div>
                             <div class="col-md-6">
-                                <select class="form-control" name="kategori" id="kategori">
-                                    <option value="" selected="selected">Pilih Kategori Produk</option>
-                                    @foreach($kategori as $k)
-                                        <option value="{{$k->id_kategori}}">{{$k->nama_kategori}}</option>
-                                    @endforeach
+                                <select class="form-control" name="kategori" id="kategori" disabled>
+                                    <option value="{{$stok->id_kategori}}" selected="selected">{{$stok->kategori->nama_kategori}}</option>
+
                                 </select>
                             </div>
                         </div>
@@ -32,18 +30,15 @@
                                 <label class="pull-right">Nama Produk</label>
                             </div>
                             <div class="col-md-6">
-                                <select class="form-control" name="produk" id="produk">
-                                    <option value="" selected="selected">Pilih Produk</option>
-                                    @foreach($produk as $p)
-                                        <option value="{{$p->id_produk}}">{{$p->nama_produk}}</option>
-                                    @endforeach
+                                <select class="form-control" name="produk" id="produk" disabled>
+                                    <option value="{{$stok->id_produk}}" selected="selected">{{$stok->nama_produk}}</option>
                                 </select>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-md-4">
-                                <label class="pull-right">Jumlah</label>
+                                <label class="pull-right">Jumlah Produk Masuk</label>
                             </div>
                             <div class="col-md-6">
                                 <input type="number" class="form-control" name="jumlah">
@@ -52,7 +47,7 @@
                     </div>
                     <div class="panel-footer">
                         <a type="button" class="btn btn-success" data-toggle="modal" data-target="#simpan">Simpan</a>
-                        <a href="/data-produk" class="btn btn-default">Batal</a>
+                        <a href="{{url()->previous()}}" class="btn btn-default">Batal</a>
                     </div>
 
                     <!-- Modal -->
