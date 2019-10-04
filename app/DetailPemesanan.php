@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\DB;
 
 class DetailPemesanan extends Model
 {
-    protected $table = 'detail_pemesanan';
-    protected $primaryKey = 'id_detailpemesanan';
-    public $timestamps = false;
+    // protected $table = 'detail_pemesanan';
+    // protected $primaryKey = 'id_detailpemesanan';
+    // public $timestamps = false;
 
     public function produk()
     {

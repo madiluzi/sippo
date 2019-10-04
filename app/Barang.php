@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Barang extends Model
 {
-    protected $table = 'tb_barang';
-    protected $primaryKey = 'id_barang';
-    public $timestamps = false;
+    // protected $table = 'tb_barang';
+    // protected $primaryKey = 'id_barang';
+    // public $timestamps = false;
 
     public function jenis()
     {

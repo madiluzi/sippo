@@ -25,7 +25,7 @@ class HomeController extends Controller
         $totalStok = Produk::totalStok();
         $masukTerbaru = Produk::orderBy('updated_at', 'desc')->take(5)->get();
         $hampirHabis = Produk::stokHampirHabis()->take(5)->get();
-
+        dd($coklat);
         return view('index', compact('coklat', 'kopi', 'kopiLuwak', 'sabun', 'hampirHabis', 'masukTerbaru', 'produkHampirHabis', 'produkHabis', 'totalStok'));
     }
 }

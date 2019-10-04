@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Stok extends Model
 {
-    protected $table = 'stok';
-    protected $primaryKey = 'id_stok';
+    // protected $table = 'stok';
+    // protected $primaryKey = 'id_stok';
 
     public function produk()
     {

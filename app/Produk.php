@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class Produk extends Model
 {
-    protected $table = 'produk';
-    protected $primaryKey = 'id_produk';
+    // protected $table = 'produk';
+    // protected $primaryKey = 'id_produk';
 
     public function kategori()
     {
