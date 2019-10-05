@@ -10,9 +10,7 @@ class JenisBarangController extends Controller
     public function view()
     {
         $jenis = Jenis::all();
-        return view('jenis-barang.jenis-barang', [
-            'jenis' => $jenis
-        ]);
+        return view('jenis-barang.jenis-barang', compact('jenis'));
     }
 
     public function tambah()
