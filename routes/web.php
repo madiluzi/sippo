@@ -48,21 +48,26 @@ Route::get('/barang-keluar', function () {
 Route::get('/data-pengguna', function () {
     return view('pengguna');
 });
+
 //Jenis Barang
-Route::get('/data-jenis-barang','JenisBarangController@view');
-Route::get('/data-jenis-barang/tambah','JenisBarangController@tambah');
-Route::post('/data-jenis-barang/proses-tambah','JenisBarangController@proses_tambah');
-Route::get('/data-jenis-barang/edit/{id}','JenisBarangController@edit');
-Route::post('/data-jenis-barang/proses-edit/{id}','JenisBarangController@proses_edit');
-Route::get('/data-jenis-barang/hapus/{id}','JenisBarangController@hapus');
+Route::group(['prefix' => 'data-jenis-barang'], function () {
+    Route::get('/','JenisBarangController@view');
+    Route::get('tambah','JenisBarangController@tambah');
+    Route::post('proses-tambah','JenisBarangController@proses_tambah');
+    Route::get('edit/{id}','JenisBarangController@edit');
+    Route::post('proses-edit/{id}','JenisBarangController@proses_edit');
+    Route::get('hapus/{id}','JenisBarangController@hapus');
+});
 
 //Barang
-Route::get('/data-barang','BarangController@view');
-Route::get('/data-barang/tambah','BarangController@tambah');
-Route::post('/data-barang/proses-tambah','BarangController@proses_tambah');
-Route::get('/data-barang/edit/{id}','BarangController@edit');
-Route::post('/data-barang/proses-edit/{id}','BarangController@proses_edit');
-Route::get('/data-barang/hapus/{id}','BarangController@hapus');
+Route::group(['prefix' => 'data-barang'], function () {
+    Route::get('/','BarangController@view');
+    Route::get('tambah','BarangController@tambah');
+    Route::post('proses-tambah','BarangController@proses_tambah');
+    Route::get('edit/{id}','BarangController@edit');
+    Route::post('proses-edit/{id}','BarangController@proses_edit');
+    Route::get('hapus/{id}','BarangController@hapus');
+});
 
 //Pengguna
 
