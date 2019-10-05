@@ -11,18 +11,13 @@ class BarangController extends Controller
     public function view()
     {
         $barang = Barang::all();
-        return view('barang.barang', [
-            'barang' => $barang
-        ]);
+        return view('barang.barang', compact('barang'));
     }
 
     public function tambah()
     {
         $jenis = Jenis::all();
         return view('barang.form-barang', compact('jenis'));
-        /*return view('form-barang',[
-            'jenis' => $jenis
-        ]);*/
     }
 
     public function proses_tambah(Request $request)
@@ -39,7 +34,7 @@ class BarangController extends Controller
     {
         $detail = Barang::find($id);
         $jenis = Jenis::all();
-        return view('barang.form-edit-barang',compact('jenis'), [
+        return view('barang.form-edit-barang', compact('jenis'), [
             'detail' => $detail
         ]);
     }
