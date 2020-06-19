@@ -27,7 +27,7 @@
 				<div class="auth-box ">
 					<div class="left">
 						<div class="content">
-							<div class="logo text-center"><img src="assets/img/logo-dark.png" alt="Klorofil Logo"></div>
+							<div class="logo text-center"><img src="assets/img/logo-dark.png" alt="Logo"></div>
 							<form class="form-auth-small" action="index.html">
 								<div class="form-group">
 									<label for="signup-email" class="control-label sr-only">Email</label>
@@ -44,9 +44,6 @@
 									</label>
 								</div>
 								<button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
-								<div class="bottom">
-									<span><i class="fa fa-lock"></i> <a href="#">Forgot password?</a></span>
-								</div>
 							</form>
 						</div>
 					</div>
